@@ -136,7 +136,7 @@
   .card-inner {
     position: relative;
     width: 100%;
-    min-height: 220px;
+    height: 340px;
     transform-style: preserve-3d;
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -154,6 +154,8 @@
     padding: 24px;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+    max-height: 340px;
   }
 
   .card-front {
