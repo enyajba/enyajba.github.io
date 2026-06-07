@@ -492,6 +492,141 @@
   }
 
   .toggle.on::after { left: 19px; }
+
+  /* ANSWER TAP BUTTONS */
+  .answer-tap-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    width: 100%;
+  }
+
+  .tap-btn {
+    flex: 1;
+    padding: 16px;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    font-size: 28px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Noto Sans JP', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .tap-btn-maru {
+    background: rgba(34,197,94,0.1);
+    border-color: var(--correct);
+    color: var(--correct);
+  }
+
+  .tap-btn-batu {
+    background: rgba(239,68,68,0.1);
+    border-color: var(--wrong);
+    color: var(--wrong);
+  }
+
+  .tap-btn:hover { opacity: 0.8; transform: scale(1.03); }
+  .tap-btn:active { transform: scale(0.97); }
+
+  .tap-btn.selected-correct {
+    background: var(--correct);
+    color: white;
+  }
+
+  .tap-btn.selected-wrong {
+    background: var(--wrong);
+    color: white;
+  }
+
+  .tap-result {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+    display: none;
+  }
+
+  .tap-result.hit {
+    background: rgba(34,197,94,0.15);
+    color: var(--correct);
+    border: 1px solid var(--correct);
+    display: block;
+  }
+
+  .tap-result.miss {
+    background: rgba(239,68,68,0.15);
+    color: var(--wrong);
+    border: 1px solid var(--wrong);
+    display: block;
+  }
+
+  /* API KEY INPUT */
+  .api-key-panel {
+    width: 100%;
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius);
+    padding: 14px;
+    margin-bottom: 4px;
+  }
+
+  .api-key-panel summary {
+    font-size: 11px;
+    color: var(--muted);
+    cursor: pointer;
+    letter-spacing: 1px;
+  }
+
+  .api-key-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .api-key-input {
+    flex: 1;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: var(--text);
+    font-size: 12px;
+    font-family: 'Noto Sans JP', sans-serif;
+    outline: none;
+  }
+
+  .api-key-input:focus { border-color: var(--orange); }
+
+  .api-save-btn {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: none;
+    background: var(--orange);
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: 'Noto Sans JP', sans-serif;
+    white-space: nowrap;
+  }
+
+  .ai-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 99px;
+    background: rgba(255,107,43,0.15);
+    color: var(--orange);
+    border: 1px solid var(--orange);
+    margin-left: 8px;
+  }
 </style>
 </head>
 <body>
@@ -540,13 +675,14 @@
     <span class="toggle-label">未回答のみ</span>
   </div>
 
-  <div class="card-scene" onclick="flipCard()">
+  <!-- 〇×タップで答える -->
+  <div class="card-scene" onclick="revealCard()" id="cardScene">
     <div class="card-inner" id="cardInner">
       <div class="card-face card-front" id="cardFront">
         <div class="card-label">問題</div>
         <div class="card-num" id="cardNum">Q1</div>
         <div class="card-question" id="cardQuestion">読み込み中...</div>
-        <div class="card-hint">タップして答えを確認</div>
+        <div class="card-hint">〇か✕をタップ、またはカードをタップして答えを確認</div>
       </div>
       <div class="card-face card-back" id="cardBack">
         <div class="card-label">解答</div>
@@ -558,9 +694,15 @@
     </div>
   </div>
 
-  <div class="btn-row">
+  <div class="answer-tap-row" id="tapRow">
+    <button class="tap-btn tap-btn-maru" id="tapMaru" onclick="tapAnswer('○')">〇</button>
+    <button class="tap-btn tap-btn-batu" id="tapBatu" onclick="tapAnswer('×')">✕</button>
+  </div>
+  <div class="tap-result" id="tapResult"></div>
+
+  <div class="btn-row" id="nextBtnRow" style="display:none">
     <button class="btn btn-secondary" onclick="markDunno()">😰 要復習</button>
-    <button class="btn btn-primary" onclick="markKnow()">👍 わかった</button>
+    <button class="btn btn-primary" onclick="markKnow()">👍 わかった・次へ</button>
   </div>
 
   <div class="nav-row">
@@ -571,7 +713,15 @@
 
   <!-- AUDIO PANEL -->
   <div class="audio-panel">
-    <div class="audio-title">🔊 音声読み上げ（運転中学習）</div>
+    <div class="audio-title">🔊 音声読み上げ（運転中学習）<span class="ai-badge" id="aiBadge">🤖 AI整形OFF</span></div>
+    <details class="api-key-panel">
+      <summary>⚙️ Claude APIキー設定（自然な読み上げ用）</summary>
+      <div class="api-key-row">
+        <input class="api-key-input" type="password" id="apiKeyInput" placeholder="sk-ant-..." />
+        <button class="api-save-btn" onclick="saveApiKey()">保存</button>
+      </div>
+      <div style="font-size:10px;color:var(--muted);margin-top:6px;">設定するとClaudeが読み上げ文章を自然に整形します。キーはこのデバイスのみに保存されます。</div>
+    </details>
     <div class="audio-controls">
       <button class="audio-btn" id="btnRead" onclick="readCurrent()">現在の問題を読む</button>
       <button class="audio-btn" id="btnAuto" onclick="toggleAuto()">▶ 自動連続再生</button>
@@ -838,8 +988,16 @@ function renderCard() {
   }
   document.getElementById('cardRef').textContent = card.ref ? '参照：' + card.ref : '';
 
-  // flip state
-  document.getElementById('cardInner').classList.toggle('flipped', state.flipped);
+  // reset tap state
+  state.flipped = false;
+  document.getElementById('cardInner').classList.remove('flipped');
+  document.getElementById('tapMaru').classList.remove('selected-correct','selected-wrong');
+  document.getElementById('tapBatu').classList.remove('selected-correct','selected-wrong');
+  document.getElementById('tapResult').className = 'tap-result';
+  document.getElementById('tapResult').textContent = '';
+  document.getElementById('tapRow').style.opacity = '1';
+  document.getElementById('tapRow').style.pointerEvents = 'auto';
+  document.getElementById('nextBtnRow').style.display = 'none';
 
   // progress
   const total = state.deck.length;
@@ -853,9 +1011,48 @@ function renderCard() {
   document.getElementById('statDunno').textContent = state.dunno;
 }
 
-function flipCard() {
-  state.flipped = !state.flipped;
-  document.getElementById('cardInner').classList.toggle('flipped', state.flipped);
+function tapAnswer(choice) {
+  if (state.flipped) return;
+  const card = state.deck[state.index];
+  const correct = card.a;
+  const isCorrect = choice === correct;
+
+  // flip card
+  state.flipped = true;
+  document.getElementById('cardInner').classList.add('flipped');
+
+  // highlight button
+  const maruBtn = document.getElementById('tapMaru');
+  const batuBtn = document.getElementById('tapBatu');
+  if (choice === '○') {
+    maruBtn.classList.add(isCorrect ? 'selected-correct' : 'selected-wrong');
+  } else {
+    batuBtn.classList.add(isCorrect ? 'selected-correct' : 'selected-wrong');
+  }
+
+  // show result
+  const res = document.getElementById('tapResult');
+  if (isCorrect) {
+    res.textContent = '✅ 正解！';
+    res.className = 'tap-result hit';
+  } else {
+    res.textContent = `❌ 不正解。正解は「${correct === '○' ? 'マル' : 'バツ'}」`;
+    res.className = 'tap-result miss';
+  }
+
+  // disable tap row
+  document.getElementById('tapRow').style.opacity = '0.5';
+  document.getElementById('tapRow').style.pointerEvents = 'none';
+  document.getElementById('nextBtnRow').style.display = 'flex';
+}
+
+function revealCard() {
+  if (state.flipped) return;
+  state.flipped = true;
+  document.getElementById('cardInner').classList.add('flipped');
+  document.getElementById('tapRow').style.opacity = '0.5';
+  document.getElementById('tapRow').style.pointerEvents = 'none';
+  document.getElementById('nextBtnRow').style.display = 'flex';
 }
 
 function nextCard() {
@@ -920,17 +1117,75 @@ function toggleUnseen() {
 }
 
 // ============================================================
-// SPEECH
+// API KEY
 // ============================================================
-function buildText(card) {
-  return `問題${card.id}。${card.q}　　答え：${card.a === '○' ? 'マル' : 'バツ'}。${card.exp ? '解説：' + card.exp : ''}`;
+let apiKey = localStorage.getItem('claude_api_key') || '';
+
+function saveApiKey() {
+  apiKey = document.getElementById('apiKeyInput').value.trim();
+  localStorage.setItem('claude_api_key', apiKey);
+  document.getElementById('aiBadge').textContent = apiKey ? '🤖 AI整形ON' : '🤖 AI整形OFF';
+  alert(apiKey ? 'APIキーを保存しました！次回から自然な読み上げになります。' : 'APIキーを削除しました。');
 }
 
-function readCurrent() {
+// ============================================================
+// SPEECH
+// ============================================================
+function naturalizeText(card) {
+  // 記号を読みやすく変換
+  let q = card.q
+    .replace(/A(\d+)/g, 'エー$1')
+    .replace(/B(\d+)/g, 'ビー$1')
+    .replace(/１/g, 'いち').replace(/２/g, 'に').replace(/３/g, 'さん')
+    .replace(/４/g, 'よん').replace(/５/g, 'ご').replace(/６/g, 'ろく')
+    .replace(/７/g, 'なな').replace(/８/g, 'はち').replace(/９/g, 'きゅう')
+    .replace(/０/g, 'ぜろ');
+  const ans = card.a === '○' ? 'マル' : 'バツ';
+  const exp = card.exp
+    ? card.exp.replace(/A(\d+)/g, 'エー$1').replace(/B(\d+)/g, 'ビー$1')
+    : '';
+  return `問題${card.id}。${q}。　正解は、${ans}です。${exp ? '解説。' + exp : ''}`;
+}
+
+async function buildTextWithAI(card) {
+  if (!apiKey) return naturalizeText(card);
+  try {
+    document.getElementById('nowReading').textContent = 'AI整形中...';
+    const prompt = `以下のバスケットボール審判ルールテストの問題と答えを、車の運転中に聞いても自然に理解できる読み上げ文章に変換してください。
+・記号（A１、B２など）は「エーいち」「ビーに」と読む
+・「○」は「マル」、「×」は「バツ」と読む
+・問題番号から始め、問題文→正解→解説の順で自然な日本語にする
+・余分な説明や前置きは不要。読み上げ文章のみ出力。
+
+問題${card.id}：${card.q}
+正解：${card.a === '○' ? 'マル' : 'バツ'}
+解説：${card.exp || 'なし'}`;
+
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 500,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data = await res.json();
+    if (data.content && data.content[0]) {
+      return data.content[0].text;
+    }
+  } catch(e) {
+    console.error('AI整形失敗:', e);
+  }
+  return naturalizeText(card);
+}
+
+async function readCurrent() {
   stopSpeech();
   const card = state.deck[state.index];
   if (!card) return;
-  const text = buildText(card);
+  document.getElementById('nowReading').textContent = `読み上げ準備中：問題${card.id}`;
+  const text = await buildTextWithAI(card);
   document.getElementById('nowReading').textContent = `読み上げ中：問題${card.id}`;
   speak(text);
 }
@@ -962,19 +1217,21 @@ function toggleAuto() {
   }
 }
 
-function autoNext() {
+async function autoNext() {
   if (!state.autoPlay) return;
   const card = state.deck[state.index];
   if (!card) { stopSpeech(); return; }
-  document.getElementById('nowReading').textContent = `問題${card.id}を読み上げ中... (${state.index + 1}/${state.deck.length})`;
+  document.getElementById('nowReading').textContent = `問題${card.id}を準備中... (${state.index + 1}/${state.deck.length})`;
   state.flipped = false;
   renderCard();
-  const text = buildText(card);
+  const text = await buildTextWithAI(card);
+  if (!state.autoPlay) return;
+  document.getElementById('nowReading').textContent = `問題${card.id}を読み上げ中... (${state.index + 1}/${state.deck.length})`;
   speak(text, () => {
     if (!state.autoPlay) return;
     if (state.index < state.deck.length - 1) {
       state.index++;
-      setTimeout(() => autoNext(), 800);
+      setTimeout(() => autoNext(), 600);
     } else {
       stopSpeech();
       document.getElementById('nowReading').textContent = '全問読み上げ完了！';
@@ -996,6 +1253,11 @@ if ("serviceWorker" in navigator) {
 
 // INIT
 // ============================================================
+// APIキー復元
+if (apiKey) {
+  document.getElementById('apiKeyInput').value = apiKey;
+  document.getElementById('aiBadge').textContent = '🤖 AI整形ON';
+}
 buildDeck();
 renderCard();
 </script>
