@@ -1,4 +1,4 @@
-const CACHE_NAME = 'jba-rules-v1';
+const CACHE_NAME = 'jba-rules-v2';
 const ASSETS = [
   '/',
   '/index.html',
