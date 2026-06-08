@@ -37,7 +37,7 @@
 
   /* HEADER */
   header {
-    padding: 16px 20px;
+    padding: 8px 14px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -50,7 +50,7 @@
 
   .logo {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px;
+    font-size: 18px;
     letter-spacing: 2px;
     background: linear-gradient(90deg, var(--orange), var(--orange2));
     -webkit-background-clip: text;
@@ -59,11 +59,11 @@
 
   .progress-wrap {
     flex: 1;
-    margin: 0 20px;
+    margin: 0 12px;
   }
 
   .progress-bar-bg {
-    height: 6px;
+    height: 4px;
     background: rgba(255,255,255,0.08);
     border-radius: 99px;
     overflow: hidden;
@@ -77,29 +77,29 @@
   }
 
   .progress-label {
-    font-size: 11px;
+    font-size: 10px;
     color: var(--muted);
     text-align: center;
-    margin-top: 4px;
+    margin-top: 2px;
   }
 
   /* TABS */
   .tabs {
     display: flex;
-    gap: 8px;
-    padding: 14px 20px;
+    gap: 6px;
+    padding: 7px 12px;
     background: var(--surface);
     border-bottom: 1px solid rgba(255,255,255,0.05);
     overflow-x: auto;
   }
 
   .tab {
-    padding: 7px 16px;
+    padding: 4px 12px;
     border-radius: 99px;
     border: 1px solid rgba(255,255,255,0.1);
     background: transparent;
     color: var(--muted);
-    font-size: 12px;
+    font-size: 11px;
     font-family: 'Noto Sans JP', sans-serif;
     cursor: pointer;
     white-space: nowrap;
@@ -116,11 +116,11 @@
   /* MAIN AREA */
   main {
     flex: 1;
-    padding: 20px;
+    padding: 8px 12px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
+    gap: 8px;
     max-width: 640px;
     margin: 0 auto;
     width: 100%;
@@ -136,7 +136,7 @@
   .card-inner {
     position: relative;
     width: 100%;
-    height: 340px;
+    height: 260px;
     transform-style: preserve-3d;
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -148,14 +148,13 @@
   .card-face {
     position: absolute;
     width: 100%;
-    min-height: 220px;
+    height: 260px;
     backface-visibility: hidden;
     border-radius: var(--radius);
-    padding: 24px;
+    padding: 14px 16px;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-    max-height: 340px;
   }
 
   .card-front {
@@ -170,32 +169,32 @@
   }
 
   .card-label {
-    font-size: 10px;
+    font-size: 9px;
     letter-spacing: 2px;
     text-transform: uppercase;
     color: var(--orange);
     font-weight: 700;
-    margin-bottom: 12px;
+    margin-bottom: 6px;
   }
 
   .card-num {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 13px;
+    font-size: 12px;
     color: var(--muted);
-    margin-bottom: 8px;
+    margin-bottom: 4px;
   }
 
   .card-question {
-    font-size: 14px;
-    line-height: 1.75;
+    font-size: 13px;
+    line-height: 1.65;
     color: var(--text);
     flex: 1;
   }
 
   .card-hint {
-    font-size: 11px;
+    font-size: 10px;
     color: var(--muted);
-    margin-top: 16px;
+    margin-top: 8px;
     text-align: center;
   }
 
@@ -203,11 +202,11 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    font-size: 28px;
+    font-size: 22px;
     font-weight: 900;
-    padding: 6px 18px;
+    padding: 3px 14px;
     border-radius: 8px;
-    margin-bottom: 14px;
+    margin-bottom: 8px;
   }
 
   .answer-badge.correct {
@@ -223,36 +222,36 @@
   }
 
   .card-explanation {
-    font-size: 12px;
-    line-height: 1.7;
+    font-size: 11px;
+    line-height: 1.6;
     color: #a0aec0;
     background: rgba(255,255,255,0.04);
     border-radius: 8px;
-    padding: 12px;
-    margin-top: 12px;
+    padding: 8px 10px;
+    margin-top: 6px;
     border-left: 3px solid var(--orange);
   }
 
   .card-ref {
-    font-size: 10px;
+    font-size: 9px;
     color: var(--muted);
-    margin-top: 10px;
+    margin-top: 6px;
   }
 
   /* BUTTONS */
   .btn-row {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     width: 100%;
   }
 
   .btn {
     flex: 1;
-    padding: 14px;
+    padding: 10px;
     border-radius: var(--radius);
     border: none;
     font-family: 'Noto Sans JP', sans-serif;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.2s;
@@ -285,13 +284,92 @@
     padding: 18px;
   }
 
-  .audio-title {
-    font-size: 12px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--orange);
+  /* FLOATING AUDIO BUTTON */
+  .fab-audio {
+    position: fixed;
+    bottom: 24px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--orange), var(--orange2));
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(255,107,43,0.5);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: fixed;
+  }
+
+  .fab-audio:hover { transform: scale(1.1); box-shadow: 0 6px 24px rgba(255,107,43,0.7); }
+  .fab-audio.active { background: linear-gradient(135deg, #22c55e, #16a34a); }
+
+  .fab-status {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #22c55e;
+    display: none;
+    border: 2px solid var(--bg);
+  }
+
+  .fab-status.on { display: block; }
+
+  /* AUDIO MODAL */
+  .audio-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 300;
+  }
+
+  .audio-modal-overlay.show { display: block; }
+
+  .audio-modal {
+    display: none;
+    position: fixed;
+    bottom: 90px;
+    right: 16px;
+    width: min(340px, calc(100vw - 32px));
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius);
+    padding: 16px;
+    z-index: 400;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .audio-modal.show { display: flex; }
+
+  .audio-modal-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
     font-weight: 700;
-    margin-bottom: 14px;
+    color: var(--orange);
+    margin-bottom: 4px;
+  }
+
+  .audio-modal-close {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 2px 6px;
   }
 
   .audio-controls {
@@ -395,14 +473,14 @@
     flex: 1;
     background: var(--card);
     border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 10px;
-    padding: 12px;
+    border-radius: 8px;
+    padding: 6px 4px;
     text-align: center;
   }
 
   .stat-num {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px;
+    font-size: 22px;
     line-height: 1;
   }
 
@@ -411,27 +489,27 @@
   .stat-num.t { color: var(--orange); }
 
   .stat-lbl {
-    font-size: 10px;
+    font-size: 9px;
     color: var(--muted);
-    margin-top: 2px;
+    margin-top: 1px;
   }
 
   /* NAV */
   .nav-row {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     width: 100%;
     align-items: center;
   }
 
   .nav-btn {
-    width: 44px;
-    height: 44px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     border: 1px solid rgba(255,255,255,0.1);
     background: rgba(255,255,255,0.05);
     color: var(--text);
-    font-size: 18px;
+    font-size: 16px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -447,10 +525,10 @@
     background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.1);
     border-radius: 8px;
-    padding: 10px 14px;
+    padding: 7px 10px;
     color: var(--text);
     font-family: 'Noto Sans JP', sans-serif;
-    font-size: 13px;
+    font-size: 12px;
     text-align: center;
     outline: none;
   }
@@ -461,11 +539,11 @@
   .toggle-row {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     width: 100%;
   }
 
-  .toggle-label { font-size: 12px; color: var(--muted); }
+  .toggle-label { font-size: 11px; color: var(--muted); }
 
   .toggle {
     width: 36px;
@@ -498,17 +576,16 @@
   /* ANSWER TAP BUTTONS */
   .answer-tap-row {
     display: flex;
-    gap: 12px;
-    margin-top: 16px;
+    gap: 8px;
     width: 100%;
   }
 
   .tap-btn {
     flex: 1;
-    padding: 16px;
-    border-radius: 12px;
+    padding: 10px;
+    border-radius: 10px;
     border: 2px solid transparent;
-    font-size: 28px;
+    font-size: 22px;
     font-weight: 900;
     cursor: pointer;
     transition: all 0.2s;
@@ -516,7 +593,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
   }
 
   .tap-btn-maru {
@@ -714,32 +791,46 @@
   </div>
 
   <!-- AUDIO PANEL -->
-  <div class="audio-panel">
-    <div class="audio-title">🔊 音声読み上げ（運転中学習）<span class="ai-badge" id="aiBadge">🤖 AI整形OFF</span></div>
-    <details class="api-key-panel">
-      <summary>⚙️ Claude APIキー設定（自然な読み上げ用）</summary>
-      <div class="api-key-row">
-        <input class="api-key-input" type="password" id="apiKeyInput" placeholder="sk-ant-..." />
-        <button class="api-save-btn" onclick="saveApiKey()">保存</button>
-      </div>
-      <div style="font-size:10px;color:var(--muted);margin-top:6px;">設定するとClaudeが読み上げ文章を自然に整形します。キーはこのデバイスのみに保存されます。</div>
-    </details>
-    <div class="audio-controls">
-      <button class="audio-btn" id="btnRead" onclick="readCurrent()">現在の問題を読む</button>
-      <button class="audio-btn" id="btnAuto" onclick="toggleAuto()">▶ 自動連続再生</button>
-      <button class="audio-btn" id="btnStop" onclick="stopSpeech()">⏹ 停止</button>
-    </div>
-    <div class="speed-row">
-      <span class="speed-label">速度：</span>
-      <button class="speed-btn active" onclick="setSpeed(0.8, this)">0.8x</button>
-      <button class="speed-btn" onclick="setSpeed(1.0, this)">1.0x</button>
-      <button class="speed-btn" onclick="setSpeed(1.2, this)">1.2x</button>
-      <button class="speed-btn" onclick="setSpeed(1.5, this)">1.5x</button>
-    </div>
-    <div class="now-reading" id="nowReading">待機中...</div>
-  </div>
 
 </main>
+
+<!-- フローティング音声ボタン -->
+<button class="fab-audio" id="fabAudio" onclick="toggleAudioModal()">
+  🔊
+  <span class="fab-status" id="fabStatus"></span>
+</button>
+
+<!-- 音声モーダル -->
+<div class="audio-modal-overlay" id="audioOverlay" onclick="closeAudioModal()"></div>
+<div class="audio-modal" id="audioModal">
+  <div class="audio-modal-header">
+    <span>🔊 音声読み上げ</span>
+    <span class="ai-badge" id="aiBadge">🤖 AI整形OFF</span>
+    <button class="audio-modal-close" onclick="closeAudioModal()">✕</button>
+  </div>
+  <details class="api-key-panel">
+    <summary>⚙️ Claude APIキー設定</summary>
+    <div class="api-key-row">
+      <input class="api-key-input" type="password" id="apiKeyInput" placeholder="sk-ant-..." />
+      <button class="api-save-btn" onclick="saveApiKey()">保存</button>
+    </div>
+    <div style="font-size:10px;color:var(--muted);margin-top:6px;">設定するとClaudeが読み上げ文章を自然に整形します。</div>
+  </details>
+  <div class="audio-controls">
+    <button class="audio-btn" id="btnRead" onclick="readCurrent()">この問題を読む</button>
+    <button class="audio-btn" id="btnAuto" onclick="toggleAuto()">▶ 自動連続再生</button>
+    <button class="audio-btn" id="btnStop" onclick="stopSpeech()">⏹ 停止</button>
+  </div>
+  <div class="speed-row">
+    <span class="speed-label">速度：</span>
+    <button class="speed-btn active" onclick="setSpeed(0.8, this)">0.8x</button>
+    <button class="speed-btn" onclick="setSpeed(1.0, this)">1.0x</button>
+    <button class="speed-btn" onclick="setSpeed(1.2, this)">1.2x</button>
+    <button class="speed-btn" onclick="setSpeed(1.5, this)">1.5x</button>
+  </div>
+  <div class="now-reading" id="nowReading">待機中...</div>
+</div>
+
 
 <script>
 // ============================================================
@@ -1118,6 +1209,24 @@ function toggleUnseen() {
   renderCard();
 }
 
+function toggleAudioModal() {
+  const modal = document.getElementById('audioModal');
+  const overlay = document.getElementById('audioOverlay');
+  const isShow = modal.classList.contains('show');
+  if (isShow) {
+    modal.classList.remove('show');
+    overlay.classList.remove('show');
+  } else {
+    modal.classList.add('show');
+    overlay.classList.add('show');
+  }
+}
+
+function closeAudioModal() {
+  document.getElementById('audioModal').classList.remove('show');
+  document.getElementById('audioOverlay').classList.remove('show');
+}
+
 // ============================================================
 // API KEY
 // ============================================================
@@ -1206,6 +1315,8 @@ function stopSpeech() {
   document.getElementById('btnAuto').textContent = '▶ 自動連続再生';
   document.getElementById('btnAuto').classList.remove('playing');
   document.getElementById('nowReading').textContent = '停止中';
+  document.getElementById('fabAudio').classList.remove('active');
+  document.getElementById('fabStatus').classList.remove('on');
 }
 
 function toggleAuto() {
@@ -1215,6 +1326,8 @@ function toggleAuto() {
     state.autoPlay = true;
     document.getElementById('btnAuto').textContent = '⏸ 停止';
     document.getElementById('btnAuto').classList.add('playing');
+    document.getElementById('fabAudio').classList.add('active');
+    document.getElementById('fabStatus').classList.add('on');
     autoNext();
   }
 }
@@ -1253,15 +1366,79 @@ if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("sw.js");
 }
 
+// ============================================================
+// PROGRESS SAVE / RESTORE
+// ============================================================
+function saveProgress() {
+  localStorage.setItem('jba_progress', JSON.stringify({
+    index: state.index,
+    filter: state.filter,
+    results: state.results,
+    know: state.know,
+    dunno: state.dunno,
+    shuffle: state.shuffle,
+    unseenOnly: state.unseenOnly,
+  }));
+}
+
+function loadProgress() {
+  try {
+    const raw = localStorage.getItem('jba_progress');
+    if (!raw) return false;
+    const data = JSON.parse(raw);
+    state.results = data.results || {};
+    state.know = data.know || 0;
+    state.dunno = data.dunno || 0;
+    state.shuffle = data.shuffle || false;
+    state.unseenOnly = data.unseenOnly || false;
+    state.filter = data.filter || 'all';
+    document.getElementById('shuffleToggle').classList.toggle('on', state.shuffle);
+    document.getElementById('filterUnseen').classList.toggle('on', state.unseenOnly);
+    buildDeck();
+    state.index = Math.min(data.index || 0, state.deck.length - 1);
+    return true;
+  } catch(e) { return false; }
+}
+
+function resetProgress() {
+  if (!confirm('進捗をリセットしますか？')) return;
+  localStorage.removeItem('jba_progress');
+  state.results = {};
+  state.know = 0;
+  state.dunno = 0;
+  state.index = 0;
+  state.filter = 'all';
+  buildDeck();
+  renderCard();
+}
+
+// markKnow/markDunnoにsaveProgressを追加
+const _mkOrig = markKnow;
+markKnow = function() { _mkOrig(); saveProgress(); };
+const _mdOrig = markDunno;
+markDunno = function() { _mdOrig(); saveProgress(); };
+
 // INIT
 // ============================================================
-// APIキー復元
 if (apiKey) {
   document.getElementById('apiKeyInput').value = apiKey;
   document.getElementById('aiBadge').textContent = '🤖 AI整形ON';
 }
-buildDeck();
+
+const restored = loadProgress();
+if (!restored) buildDeck();
 renderCard();
+
+// 🔄リセットボタンをナビに追加
+const _navRow = document.querySelector('.nav-row');
+if (_navRow) {
+  const _resetBtn = document.createElement('button');
+  _resetBtn.className = 'nav-btn';
+  _resetBtn.title = 'リセット';
+  _resetBtn.textContent = '🔄';
+  _resetBtn.onclick = resetProgress;
+  _navRow.appendChild(_resetBtn);
+}
 </script>
 </body>
 </html>
